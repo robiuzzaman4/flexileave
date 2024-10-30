@@ -3,7 +3,7 @@ import React from "react";
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="p-20">
       <h2 className="text-3xl font-semibold tracking-tight">
         The People of the Kingdom
       </h2>
