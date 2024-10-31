@@ -21,7 +21,7 @@ const SignUpSchema = z.object({
     message: "Name must be at least 3 characters.",
   }),
   email: z.string().email({
-    message: "Enter valid email address.",
+    message: "Enter a valid email address.",
   }),
   password: z.string().min(6, {
     message: "Username must be at least 6 characters.",
@@ -45,7 +45,7 @@ const SignUpForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full max-w-xs mx-auto space-y-3 bg-background p-6 rounded-xl border shadow-lg"
+        className="w-full max-w-sm mx-auto space-y-3 bg-background p-6 rounded-xl border shadow-lg"
       >
         <h3 className="text-xl font-medium tracking-tighter">
           Sign Up to <span className="text-primary">Flexileave</span>{" "}
