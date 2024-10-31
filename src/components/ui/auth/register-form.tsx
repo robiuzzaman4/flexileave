@@ -38,7 +38,7 @@ const RegisterForm = () => {
         className="w-full max-w-sm mx-auto space-y-3 bg-background p-6 rounded-xl border shadow-lg"
       >
         <h3 className="text-xl font-medium tracking-tighter">
-          Register into <span className="text-primary">Flexileave</span>{" "}
+          Register into Flexileave
         </h3>
         <FormField
           control={form.control}
