@@ -5,6 +5,6 @@ type SignInPayload = {
   password: string;
 };
 
-export async function userSignIn(payload: SignInPayload) {
+export async function login(payload: SignInPayload) {
   console.log("payload", payload);
 }

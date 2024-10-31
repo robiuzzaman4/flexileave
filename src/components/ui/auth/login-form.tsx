@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { userSignIn } from "@/actions/userSignIn";
+import { login } from "@/actions/login";
 import { useTransition } from "react";
 import { Loader } from "lucide-react";
 
@@ -41,7 +41,7 @@ const LoginForm = () => {
 
   function onSubmit(data: z.infer<typeof SignInSchema>) {
     startTransition(() => {
-      userSignIn(data);
+      login(data);
     });
   }
 
