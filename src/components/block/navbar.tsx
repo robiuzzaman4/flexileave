@@ -11,7 +11,7 @@ const Navbar = () => {
         </Link>
 
         <Button asChild>
-          <Link href="/signin">Signin</Link>
+          <Link href="/signin">Sign In</Link>
         </Button>
       </div>
     </nav>

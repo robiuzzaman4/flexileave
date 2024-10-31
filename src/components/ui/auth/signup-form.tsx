@@ -16,7 +16,10 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 
-const SignInSchema = z.object({
+const SignUpSchema = z.object({
+  name: z.string().min(3, {
+    message: "Name must be at least 3 characters.",
+  }),
   email: z.string().email({
     message: "Enter valid email address.",
   }),
@@ -25,16 +28,16 @@ const SignInSchema = z.object({
   }),
 });
 
-const SignInForm = () => {
-  const form = useForm<z.infer<typeof SignInSchema>>({
-    resolver: zodResolver(SignInSchema),
+const SignUpForm = () => {
+  const form = useForm<z.infer<typeof SignUpSchema>>({
+    resolver: zodResolver(SignUpSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  function onSubmit(data: z.infer<typeof SignInSchema>) {
+  function onSubmit(data: z.infer<typeof SignUpSchema>) {
     console.log("data", data);
   }
 
@@ -45,8 +48,21 @@ const SignInForm = () => {
         className="w-full max-w-xs mx-auto space-y-3 bg-background p-6 rounded-xl border shadow-lg"
       >
         <h3 className="text-xl font-medium tracking-tighter">
-          Sign In to <span className="text-primary">Flexileave</span>{" "}
+          Sign Up to <span className="text-primary">Flexileave</span>{" "}
         </h3>
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Jhon Doe" {...field} type="text" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="email"
@@ -74,12 +90,12 @@ const SignInForm = () => {
           )}
         />
         <Button type="submit" className="w-full">
-          Sign In
+          Sign Up
         </Button>
         <p className="text-muted-foreground text-sm">
-          Don&apos;t have any account?{" "}
-          <Link href="/signup" className="text-primary">
-            Sign Up
+          Already have account?{" "}
+          <Link href="/signin" className="text-primary">
+            Sign In
           </Link>
         </p>
       </form>
@@ -87,4 +103,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default SignUpForm;
