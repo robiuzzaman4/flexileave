@@ -1,13 +1,17 @@
-import { Button } from "@/components/ui/button";
 import React from "react";
+import SigninForm from "@/components/ui/auth/signin-form";
+import { auth } from "@/auth";
 
-const HomePage = () => {
+const HomePage = async() => {
+  const session = await auth();
+  console.log("session", session);
+  
+  
   return (
     <div className="p-20">
-      <h2 className="text-3xl font-semibold tracking-tight">
-        The People of the Kingdom
-      </h2>
-      <Button>Home Page</Button>
+      <SigninForm />
+
+
     </div>
   );
 };
