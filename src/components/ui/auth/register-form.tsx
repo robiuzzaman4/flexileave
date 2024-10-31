@@ -15,29 +15,19 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-
-const SignUpSchema = z.object({
-  name: z.string().min(3, {
-    message: "Name must be at least 3 characters.",
-  }),
-  email: z.string().email({
-    message: "Enter a valid email address.",
-  }),
-  password: z.string().min(6, {
-    message: "Username must be at least 6 characters.",
-  }),
-});
+import { RegisterSchema } from "@/schema";
 
 const RegisterForm = () => {
-  const form = useForm<z.infer<typeof SignUpSchema>>({
-    resolver: zodResolver(SignUpSchema),
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   });
 
-  function onSubmit(data: z.infer<typeof SignUpSchema>) {
+  function onSubmit(data: z.infer<typeof RegisterSchema>) {
     console.log("data", data);
   }
 

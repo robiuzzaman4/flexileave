@@ -16,33 +16,34 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { login } from "@/actions/login";
-import { useTransition } from "react";
 import { Loader } from "lucide-react";
-
-const SignInSchema = z.object({
-  email: z.string().email({
-    message: "Enter a valid email address.",
-  }),
-  password: z.string().min(6, {
-    message: "Username must be at least 6 characters.",
-  }),
-});
+import { LoginSchema } from "@/schema";
+import { useTransition } from "react";
+import { toast } from "sonner";
 
 const LoginForm = () => {
   const [pending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof SignInSchema>>({
-    resolver: zodResolver(SignInSchema),
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  function onSubmit(data: z.infer<typeof SignInSchema>) {
+  function onSubmit(data: z.infer<typeof LoginSchema>) {
     startTransition(() => {
-      login(data);
+      login(data).then((data) => {
+        if (data.success) {
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
+        }
+      });
     });
+
+    form.reset();
   }
 
   return (
