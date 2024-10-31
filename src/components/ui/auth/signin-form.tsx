@@ -14,10 +14,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 const FormSchema = z.object({
   email: z.string().email({
-    message: "Invalid email address.",
+    message: "Enter valid email address.",
   }),
   password: z.string().min(6, {
     message: "Username must be at least 6 characters.",
@@ -41,8 +42,11 @@ const SignInForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full max-w-sm mx-auto space-y-6 bg-background p-6 rounded-lg border"
+        className="w-full max-w-xs mx-auto space-y-3 bg-background p-6 rounded-lg border shadow-md"
       >
+        <h3 className="text-xl font-medium tracking-tighter">
+          Sign In to <span className="text-primary">Flexileave</span>{" "}
+        </h3>
         <FormField
           control={form.control}
           name="email"
@@ -63,17 +67,21 @@ const SignInForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="******"
-                  {...field}
-                  type="password"
-                />
+                <Input placeholder="******" {...field} type="password" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="w-full">
+          Sign In
+        </Button>
+        <p className="text-muted-foreground text-sm">
+          Don&apos;t have any account?{" "}
+          <Link href="/signup" className="text-primary">
+            Sign Up
+          </Link>
+        </p>
       </form>
     </Form>
   );
