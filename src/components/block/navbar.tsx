@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+import ThemeToggle from "@/components/theme/theme-toggle";
 
 const Navbar = () => {
   return (
@@ -10,9 +11,12 @@ const Navbar = () => {
           Flexileave
         </Link>
 
-        <Button asChild>
-          <Link href="/login">Login</Link>
-        </Button>
+        <div className="flex items-center gap-3">
+          <Button asChild>
+            <Link href="/login">Login</Link>
+          </Button>
+          <ThemeToggle />
+        </div>
       </div>
     </nav>
   );
