@@ -15,6 +15,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { userSignIn } from "@/actions/userSignIn";
+import { useTransition } from "react";
+import { Loader } from "lucide-react";
 
 const SignInSchema = z.object({
   email: z.string().email({
@@ -26,6 +29,8 @@ const SignInSchema = z.object({
 });
 
 const SignInForm = () => {
+  const [pending, startTransition] = useTransition();
+
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
@@ -35,7 +40,9 @@ const SignInForm = () => {
   });
 
   function onSubmit(data: z.infer<typeof SignInSchema>) {
-    console.log("data", data);
+    startTransition(() => {
+      userSignIn(data);
+    });
   }
 
   return (
@@ -73,7 +80,8 @@ const SignInForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full" disabled={pending}>
+          {pending && <Loader className="text-sm animate-spin" />}
           Sign In
         </Button>
         <p className="text-muted-foreground text-sm">
