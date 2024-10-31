@@ -15,11 +15,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { userSignIn } from "@/actions/userSignIn";
-import { useTransition } from "react";
-import { Loader } from "lucide-react";
 
-const SignInSchema = z.object({
+const SignUpSchema = z.object({
+  name: z.string().min(3, {
+    message: "Name must be at least 3 characters.",
+  }),
   email: z.string().email({
     message: "Enter a valid email address.",
   }),
@@ -28,21 +28,17 @@ const SignInSchema = z.object({
   }),
 });
 
-const SignInForm = () => {
-  const [pending, startTransition] = useTransition();
-
-  const form = useForm<z.infer<typeof SignInSchema>>({
-    resolver: zodResolver(SignInSchema),
+const RegisterForm = () => {
+  const form = useForm<z.infer<typeof SignUpSchema>>({
+    resolver: zodResolver(SignUpSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  function onSubmit(data: z.infer<typeof SignInSchema>) {
-    startTransition(() => {
-      userSignIn(data);
-    });
+  function onSubmit(data: z.infer<typeof SignUpSchema>) {
+    console.log("data", data);
   }
 
   return (
@@ -52,8 +48,21 @@ const SignInForm = () => {
         className="w-full max-w-sm mx-auto space-y-3 bg-background p-6 rounded-xl border shadow-lg"
       >
         <h3 className="text-xl font-medium tracking-tighter">
-          Sign In to <span className="text-primary">Flexileave</span>{" "}
+          Register into <span className="text-primary">Flexileave</span>{" "}
         </h3>
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Jhon Doe" {...field} type="text" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="email"
@@ -80,14 +89,13 @@ const SignInForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" disabled={pending}>
-          {pending && <Loader className="text-sm animate-spin" />}
-          Sign In
+        <Button type="submit" className="w-full">
+          Register
         </Button>
         <p className="text-muted-foreground text-sm">
-          Don&apos;t have any account?{" "}
-          <Link href="/signup" className="text-primary">
-            Sign Up
+          Already have account?{" "}
+          <Link href="/login" className="text-primary">
+            Login
           </Link>
         </p>
       </form>
@@ -95,4 +103,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default RegisterForm;
