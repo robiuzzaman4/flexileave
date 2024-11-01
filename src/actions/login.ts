@@ -9,7 +9,7 @@ export async function login(payload: z.infer<typeof LoginSchema>) {
   if (!validatedFields) {
     return {
       success: false,
-      message: "Invalid login credentials",
+      message: "Invalid fields",
     };
   }
 
