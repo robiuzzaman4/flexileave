@@ -5,7 +5,7 @@ import ThemeToggle from "@/components/theme/theme-toggle";
 
 const Navbar = () => {
   return (
-    <nav className="bg-background fixed top-0 w-full h-14 flex items-center border-b">
+    <nav className="bg-secondary fixed top-0 w-full h-14 flex items-center border-b">
       <div className="w-full h-full max-w-screen-lg m-auto px-4 flex items-center justify-between">
         <Link href="/" className="text-xl font-medium tracking-tighter">
           Flexileave
