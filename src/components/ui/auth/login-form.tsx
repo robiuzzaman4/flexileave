@@ -52,7 +52,7 @@ const LoginForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="w-full max-w-sm mx-auto space-y-3 bg-card text-card-foreground p-6 rounded-xl border shadow-lg"
       >
-        <h3 className="text-xl font-medium tracking-tighter">
+        <h3 className="text-2xl font-medium tracking-tighter">
           Login into <span className="text-primary">Flexileave</span>
         </h3>
         <FormField
