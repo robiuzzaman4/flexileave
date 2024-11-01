@@ -16,8 +16,13 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { RegisterSchema } from "@/schema";
+import { useTransition } from "react";
+import { register } from "@/actions/register";
+import { toast } from "sonner";
 
 const RegisterForm = () => {
+  const [pending, startTransition] = useTransition();
+
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -28,7 +33,17 @@ const RegisterForm = () => {
   });
 
   function onSubmit(data: z.infer<typeof RegisterSchema>) {
-    console.log("data", data);
+    startTransition(() => {
+      register(data).then((data) => {
+        if (data.success) {
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
+        }
+      });
+    });
+
+    form.reset();
   }
 
   return (
@@ -79,7 +94,7 @@ const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full" disabled={pending}>
           Register
         </Button>
         <p className="text-muted-foreground text-sm">
