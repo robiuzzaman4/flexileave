@@ -19,9 +19,11 @@ import { RegisterSchema } from "@/schema";
 import { useTransition } from "react";
 import { register } from "@/actions/register";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
   const [pending, startTransition] = useTransition();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -33,17 +35,24 @@ const RegisterForm = () => {
   });
 
   function onSubmit(data: z.infer<typeof RegisterSchema>) {
+    // call server action and show response message
     startTransition(() => {
       register(data).then((data) => {
-        if (data.success) {
-          toast.success(data.message);
+        if (data?.success) {
+          toast.success(data?.message);
+          router.push("/login");
         } else {
-          toast.error(data.message);
+          toast.error(data?.message);
         }
       });
     });
 
-    form.reset();
+    // reset form
+    form.reset({
+      name: "",
+      email: "",
+      password: "",
+    });
   }
 
   return (
