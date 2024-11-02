@@ -34,10 +34,10 @@ const RegisterForm = () => {
     },
   });
 
-  function onSubmit(data: z.infer<typeof RegisterSchema>) {
+  function onSubmit(values: z.infer<typeof RegisterSchema>) {
     // call server action and show response message
     startTransition(() => {
-      register(data).then((data) => {
+      register(values).then((data) => {
         if (data?.success) {
           toast.success(data?.message);
           router.push("/login");

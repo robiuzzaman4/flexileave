@@ -32,10 +32,10 @@ const LoginForm = () => {
     },
   });
 
-  function onSubmit(data: z.infer<typeof LoginSchema>) {
+  function onSubmit(values: z.infer<typeof LoginSchema>) {
+    // call server action and show response message
     startTransition(() => {
-      login(data).then((data) => {
-        console.log("data", data);
+      login(values).then((data) => {
         if (data?.success) {
           toast.success(data?.message);
         } else {
