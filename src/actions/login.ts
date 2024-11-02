@@ -1,46 +1,58 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import connectDb from "@/lib/db";
 import { LoginSchema } from "@/schema";
 import { z } from "zod";
-import User from "@/models/user";
+import { signIn } from "@/auth";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { AuthError } from "next-auth";
 
 export async function login(payload: z.infer<typeof LoginSchema>) {
   const validatedFields = LoginSchema.safeParse(payload);
 
-  if (!validatedFields) {
+  if (!validatedFields.success) {
     return {
       success: false,
       message: "Invalid fields",
     };
   }
 
-  try {
-    // connect db
-    await connectDb();
+  const { email, password } = validatedFields?.data;
 
-    // check if user already exists
-    const existingUser = await User.findOne({
-      email: validatedFields.data?.email,
+  try {
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
 
-    // if user exists, return error message
-    if (!existingUser) {
+    if (result) {
+      return {
+        success: true,
+        message: "Login successful",
+      };
+    } else {
       return {
         success: false,
-        message: "User not found",
+        message: "Failed to login",
       };
     }
-
-    return {
-      success: true,
-      message: "Login successful",
-    };
   } catch (error: any) {
-    return {
-      success: false,
-      message: error.message ?? "Failed to login",
-    };
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case "CredentialsSignin":
+          return {
+            success: false,
+            message: "Invalid credentials",
+          };
+        default:
+          return {
+            success: false,
+            message: error.message ?? "Failed to login",
+          };
+      }
+    }
+
+    throw error;
   }
 }

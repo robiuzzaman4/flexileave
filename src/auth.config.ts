@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { LoginSchema } from "@/schema";
 import { getUserByEmail } from "@/data";
-const bcrypt = require("bcryptjs");
+import bcrypt from "bcryptjs";
 
 export default {
   providers: [
@@ -18,10 +17,13 @@ export default {
           const user = await getUserByEmail(email);
 
           // if user exist but didn't provide password [like login with google] then simply stop exicuting
-          if (!user || user?.password) return null;
+          if (!user || !user?.password) return null;
 
           // compare password
-          const passwordMatched = await bcrypt.compare(password, user?.password);
+          const passwordMatched = await bcrypt.compare(
+            password,
+            user?.password
+          );
 
           // if password matched then return user
           if (passwordMatched) return user;

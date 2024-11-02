@@ -5,13 +5,14 @@ import connectDb from "@/lib/db";
 import { RegisterSchema } from "@/schema";
 import { z } from "zod";
 import User from "@/models/user";
+import bcrypt from "bcryptjs";
 
 export async function register(payload: z.infer<typeof RegisterSchema>) {
   // validate fields
   const validatedFields = RegisterSchema.safeParse(payload);
 
   // check if fields are valid
-  if (!validatedFields) {
+  if (!validatedFields.success) {
     return {
       success: false,
       message: "Invalid fields",
@@ -22,9 +23,11 @@ export async function register(payload: z.infer<typeof RegisterSchema>) {
     // connect db
     await connectDb();
 
+    const { name, email, password } = validatedFields.data;
+
     // check if user already exists
     const existingUser = await User.findOne({
-      email: validatedFields.data?.email,
+      email: email,
     });
 
     // if user exists, return error message
@@ -35,8 +38,15 @@ export async function register(payload: z.infer<typeof RegisterSchema>) {
       };
     }
 
+    // hashed password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     // create user and return success response
-    const result = await User.create(validatedFields?.data);
+    const result = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
 
     if (result) {
       return {
