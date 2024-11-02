@@ -10,7 +10,7 @@ import { AuthError } from "next-auth";
 export async function login(payload: z.infer<typeof LoginSchema>) {
   const validatedFields = LoginSchema.safeParse(payload);
 
-  if (!validatedFields.success) {
+  if (!validatedFields?.success) {
     return {
       success: false,
       message: "Invalid fields",
@@ -34,12 +34,12 @@ export async function login(payload: z.infer<typeof LoginSchema>) {
     } else {
       return {
         success: false,
-        message: "Failed to login",
+        message: "Something went wrong",
       };
     }
   } catch (error: any) {
     if (error instanceof AuthError) {
-      switch (error.type) {
+      switch (error?.type) {
         case "CredentialsSignin":
           return {
             success: false,
@@ -48,7 +48,7 @@ export async function login(payload: z.infer<typeof LoginSchema>) {
         default:
           return {
             success: false,
-            message: error.message ?? "Failed to login",
+            message: error?.message ?? "Something went wrong",
           };
       }
     }

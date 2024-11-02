@@ -35,10 +35,11 @@ const LoginForm = () => {
   function onSubmit(data: z.infer<typeof LoginSchema>) {
     startTransition(() => {
       login(data).then((data) => {
-        if (data.success) {
-          toast.success(data.message);
+        console.log("data", data);
+        if (data?.success) {
+          toast.success(data?.message);
         } else {
-          toast.error(data.message);
+          toast.error(data?.message);
         }
       });
     });

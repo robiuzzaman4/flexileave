@@ -2,8 +2,12 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/theme/theme-toggle";
+import LogoutButton from "@/components/block/logout-button";
+import { auth } from "@/auth";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const session = await auth();
+  
   return (
     <nav className="bg-secondary fixed top-0 w-full h-14 flex items-center border-b">
       <div className="w-full h-full max-w-screen-lg m-auto px-4 flex items-center justify-between">
@@ -12,9 +16,14 @@ const Navbar = () => {
         </Link>
 
         <div className="flex items-center gap-3">
-          <Button asChild>
-            <Link href="/login">Login</Link>
-          </Button>
+          {session ? (
+            <LogoutButton />
+          ) : (
+            <Button asChild>
+              <Link href="/login">Login</Link>
+            </Button>
+          )}
+
           <ThemeToggle />
         </div>
       </div>
