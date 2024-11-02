@@ -37,7 +37,6 @@ export async function register(payload: z.infer<typeof RegisterSchema>) {
 
     // create user and return success response
     const result = await User.create(validatedFields?.data);
-    console.log("result", result);
 
     if (result) {
       return {
