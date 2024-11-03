@@ -11,8 +11,25 @@ export async function getUserById(id: string) {
   return user;
 }
 
-export async function getAllUsers() {
+export async function getAllUsers(userId: string) {
   try {
+    const user = await getUserById(userId);
+    if (!user) {
+      return {
+        success: false,
+        message: "Forbidden access",
+        data: null,
+      };
+    }
+
+    if (user?.role !== "ADMIN") {
+      return {
+        success: false,
+        message: "Forbidden access",
+        data: null,
+      };
+    }
+
     const users = await User.find({});
     return {
       success: true,
