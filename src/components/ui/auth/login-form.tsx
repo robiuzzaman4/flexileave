@@ -44,7 +44,11 @@ const LoginForm = () => {
       });
     });
 
-    form.reset();
+    // reset form
+    form.reset({
+      email: "",
+      password: "",
+    });
   }
 
   return (
