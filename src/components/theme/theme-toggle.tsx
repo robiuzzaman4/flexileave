@@ -13,12 +13,12 @@ const ThemeToggle = () => {
     <>
       {theme === "light" ? (
         <Button variant="outline" size="icon" onClick={() => setTheme("dark")} className="bg-secondary">
-          <SunIcon />
+          <MoonIcon />
           <span className="sr-only">Toggle theme</span>
         </Button>
       ) : (
         <Button variant="outline" size="icon" onClick={() => setTheme("light")} className="bg-secondary">
-          <MoonIcon />
+          <SunIcon />
           <span className="sr-only">Toggle theme</span>
         </Button>
       )}
