@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import connectDb from "@/lib/db";
 import { RegisterSchema } from "@/schema";
 import { z } from "zod";
 import User from "@/models/user";
@@ -20,9 +19,6 @@ export async function register(payload: z.infer<typeof RegisterSchema>) {
   }
 
   try {
-    // connect db
-    await connectDb();
-
     const { name, email, password } = validatedFields.data;
 
     // check if user already exists

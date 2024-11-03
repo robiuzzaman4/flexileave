@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/block/navbar";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import connectDb from "@/lib/db";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,11 +22,13 @@ export const metadata: Metadata = {
   description: "Reflects Flexibility in Leave Handling.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // connect db
+  await connectDb();
   return (
     <html lang="en">
       <body
