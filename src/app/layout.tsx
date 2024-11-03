@@ -30,7 +30,7 @@ export default async function RootLayout({
   // connect db
   await connectDb();
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
       >

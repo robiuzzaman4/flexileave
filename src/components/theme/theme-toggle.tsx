@@ -8,16 +8,35 @@ import { Button } from "@/components/ui/button";
 
 const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+  
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <>
       {theme === "light" ? (
-        <Button variant="outline" size="icon" onClick={() => setTheme("dark")} className="bg-secondary">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => setTheme("dark")}
+          className="bg-secondary"
+        >
           <MoonIcon />
           <span className="sr-only">Toggle theme</span>
         </Button>
       ) : (
-        <Button variant="outline" size="icon" onClick={() => setTheme("light")} className="bg-secondary">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => setTheme("light")}
+          className="bg-secondary"
+        >
           <SunIcon />
           <span className="sr-only">Toggle theme</span>
         </Button>
