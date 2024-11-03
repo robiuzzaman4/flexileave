@@ -53,9 +53,14 @@ const LoginForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="w-full max-w-sm mx-auto space-y-3 bg-card text-card-foreground p-6 rounded-xl border shadow-lg"
       >
-        <h3 className="text-2xl font-medium tracking-tighter">
-          Login into <span className="text-primary">Flexileave</span>
-        </h3>
+        <span className="grid gap-1 text-center">
+          <h3 className="text-2xl font-medium tracking-tighter">
+            Login into <span className="text-primary">Flexileave</span>
+          </h3>
+          <p className="text-sm text-muted-foreground tracking-tighter">
+            Welcome Back.
+          </p>
+        </span>
         <FormField
           control={form.control}
           name="email"

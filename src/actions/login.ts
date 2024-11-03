@@ -26,6 +26,9 @@ export async function login(payload: z.infer<typeof LoginSchema>) {
       redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
 
+    console.log("login successful");
+    
+
     return {
       success: true,
       message: "Login successful",
