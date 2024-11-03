@@ -6,6 +6,11 @@ export async function getUserByEmail(email: string) {
   return user;
 }
 
+export async function getUserById(id: string) {
+  const user = await User?.findOne({ _id: id });
+  return user;
+}
+
 export async function getAllUsers() {
   try {
     const users = await User.find({});
