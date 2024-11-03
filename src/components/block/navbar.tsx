@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { Button } from "@/components/ui/button";
-import ThemeToggle from "@/components/theme/theme-toggle";
+import ThemeBtn from "@/components/theme/theme-button";
 import { auth } from "@/auth";
 
 const Navbar = async () => {
@@ -25,7 +25,7 @@ const Navbar = async () => {
             </Button>
           )}
 
-          <ThemeToggle />
+          <ThemeBtn />
         </div>
       </div>
     </nav>
