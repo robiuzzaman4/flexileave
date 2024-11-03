@@ -19,7 +19,7 @@ const UserInfo = async () => {
   const formattedExpireDate = formatter.format(expireDate);
 
   return (
-    <div className="w-full max-w-sm mx-auto space-y-3 bg-card text-card-foreground p-6 rounded-xl border shadow-lg grid gap-3">
+    <div className="w-full  space-y-3 bg-card text-card-foreground p-6 rounded-xl border shadow-lg grid gap-3">
       <h3 className="text-2xl font-medium tracking-tighter text-center">
         Welcome to <span className="text-primary">Dashboard</span>
       </h3>
@@ -41,7 +41,6 @@ const UserInfo = async () => {
         </p>
       </span>
       <LogoutButton />
-      {/* <div className="text-wrap">{JSON.stringify(session)}</div> */}
     </div>
   );
 };

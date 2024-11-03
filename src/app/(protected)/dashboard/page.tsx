@@ -11,7 +11,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 
 const DashboardPage = async () => {
   const session = await auth();
@@ -19,14 +18,13 @@ const DashboardPage = async () => {
 
   return (
     <section className="w-full h-full max-w-screen-md mx-auto px-4 py-14 grid gap-14">
-      {/* <div>Session: {JSON.stringify(session)}</div> */}
       <UserInfo />
       {session &&
         session?.user?.role === "ADMIN" &&
         users &&
         users?.length > 0 && (
           <div className="overflow-hidden bg-card text-card-foreground p-6 rounded-xl border shadow-lg">
-            <Table>
+            <Table className="text-muted-foreground">
               <TableCaption>A list of users.</TableCaption>
               <TableHeader>
                 <TableRow>
@@ -52,11 +50,7 @@ const DashboardPage = async () => {
                     <TableCell className="whitespace-nowrap px-4">
                       {user?.role}
                     </TableCell>
-                    <TableCell className="whitespace-nowrap px-4">
-                      <Button variant="destructive" size="sm">
-                        Remove
-                      </Button>
-                    </TableCell>
+                    <TableCell className="whitespace-nowrap px-4">_</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

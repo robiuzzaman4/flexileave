@@ -21,6 +21,7 @@ const LogoutButton = () => {
         variant="destructive"
         disabled={pending}
         onClick={handleLogout}
+        className="w-fit"
       >
         {pending && <Loader className="text-sm animate-spin" />}
         Logout
