@@ -34,6 +34,9 @@ const UserInfo = async () => {
           Email: {session?.user?.email}
         </p>
         <p className="text-sm text-muted-foreground tracking-tighter">
+          Role: {session?.user?.role}
+        </p>
+        <p className="text-sm text-muted-foreground tracking-tighter">
           Session Expire: {formattedExpireDate}
         </p>
       </span>

@@ -2,12 +2,12 @@
 import User from "@/models/user";
 
 export async function getUserByEmail(email: string) {
-  const user = await User?.findOne({ email });
+  const user = await User.findOne({ email });
   return user;
 }
 
 export async function getUserById(id: string) {
-  const user = await User?.findOne({ _id: id });
+  const user = await User.findOne({ _id: id });
   return user;
 }
 
