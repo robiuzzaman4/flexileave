@@ -5,7 +5,7 @@ import LogoutButton from "@/components/block/logout-button";
 const UserInfo = async () => {
   const session = await auth();
 
-  const date = new Date(session?.expires as string);
+  const expireDate = new Date(session?.expires as string);
 
   const formatter = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
@@ -16,7 +16,7 @@ const UserInfo = async () => {
     hour12: true,
   });
 
-  const formattedDate = formatter.format(date);
+  const formattedExpireDate = formatter.format(expireDate);
 
   return (
     <div className="w-full max-w-sm mx-auto space-y-3 bg-card text-card-foreground p-6 rounded-xl border shadow-lg grid gap-3">
@@ -25,16 +25,20 @@ const UserInfo = async () => {
       </h3>
       <span className="grid gap-1">
         <p className="text-sm text-muted-foreground tracking-tighter">
+          Id: {session?.user?.id}
+        </p>
+        <p className="text-sm text-muted-foreground tracking-tighter">
           Name: {session?.user?.name}
         </p>
         <p className="text-sm text-muted-foreground tracking-tighter">
           Email: {session?.user?.email}
         </p>
         <p className="text-sm text-muted-foreground tracking-tighter">
-          Session Expire: {formattedDate}
+          Session Expire: {formattedExpireDate}
         </p>
       </span>
       <LogoutButton />
+      {/* <div className="text-wrap">{JSON.stringify(session)}</div> */}
     </div>
   );
 };
