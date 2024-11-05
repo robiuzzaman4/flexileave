@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { TUser } from "@/types";
 
 const DashboardPage = async () => {
   const session = await auth();
@@ -39,7 +40,7 @@ const DashboardPage = async () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {users?.map((user) => (
+                {users?.map((user: TUser) => (
                   <TableRow key={user?.id}>
                     <TableCell className="whitespace-nowrap px-4">
                       {user?.name}
