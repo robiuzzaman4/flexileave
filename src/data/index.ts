@@ -1,18 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import User from "@/models/user";
+import connectDb from "@/lib/db";
+// import User from "@/models/user";
 
 export async function getUserByEmail(email: string) {
-  const user = await User.findOne({ email });
+  const { db } = await connectDb();
+  const collection = db.collection("users");
+
+  const user = await collection.findOne({ email });
   return user;
+
+  // const user = await User.findOne({ email });
+  // return user;
 }
 
 export async function getUserById(id: string) {
-  const user = await User.findOne({ _id: id });
+  const { db } = await connectDb();
+  const collection = db.collection("users");
+
+  const user = await collection.findOne({ _id: id });
   return user;
+
+  // const user = await User.findOne({ _id: id });
+  // return user;
 }
 
 export async function getAllUsers(userId: string) {
   try {
+    const { db } = await connectDb();
+    const collection = db.collection("users");
+
     const user = await getUserById(userId);
     if (!user) {
       return {
@@ -30,7 +46,7 @@ export async function getAllUsers(userId: string) {
       };
     }
 
-    const users = await User.find({});
+    const users = await collection.find({});
     return {
       success: true,
       message: "Get all users fetched successfully",
