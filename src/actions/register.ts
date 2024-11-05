@@ -5,6 +5,8 @@ import { RegisterSchema } from "@/schema";
 import { z } from "zod";
 import User from "@/models/user";
 import bcrypt from "bcryptjs";
+import { getUserByEmail } from "@/data";
+import connectDb from "@/lib/db";
 
 export async function register(payload: z.infer<typeof RegisterSchema>) {
   // validate fields
@@ -21,10 +23,11 @@ export async function register(payload: z.infer<typeof RegisterSchema>) {
   try {
     const { name, email, password } = validatedFields.data;
 
+    const { db } = await connectDb();
+    const collection = db.collection("users");
+
     // check if user already exists
-    const existingUser = await User.findOne({
-      email: email,
-    });
+    const existingUser = await getUserByEmail(email);
 
     // if user exists, return error message
     if (existingUser) {
@@ -38,7 +41,13 @@ export async function register(payload: z.infer<typeof RegisterSchema>) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // create user and return success response
-    const result = await User.create({
+    // const result = await User.create({
+    //   name,
+    //   email,
+    //   password: hashedPassword,
+    // });
+
+    const result = await collection.insertOne({
       name,
       email,
       password: hashedPassword,
